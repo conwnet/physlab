@@ -27,7 +27,7 @@ res = Connect(LoginURL, LoginData)
 info = Connect(InfoURL).read().decode('gb2312');
 if re.search(r'密码错误', info):
 	print('密码错误！')
-	exit(0)
+	exit()
 info = [re.search(r'学号[^>]*>[^>]*>([^<]*)', info).group(1), re.search(r'姓名[^>]*>[^>]*>([^<]*)', info).group(1), re.search(r'班级[^>]*>[^>]*>([^<]*)', info).group(1)]
 print('学号：' + info[0] + '\n姓名：' + info[1] + '\n班级：' + info[2])
 
