@@ -47,7 +47,7 @@ while True:
 		if re.search(r'访问人数', info):
 			continue
 		elif re.search(r'物理实验每周只能预约', info):
-			print('你本周已经选过实验了')
+			print('所选周次已经预约实验')
 		elif re.search(r'你已经做过该实验的同组实验', info):
 			print('你已经做该试验的同组实验')
 		elif re.search(r'你已经做过该实验', info):
