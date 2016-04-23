@@ -43,7 +43,7 @@ for item in info:
 while True:
 	num = int(input('输入课程编号；'))
 	while True:
-		info = Connect(ClassURL, ('sy_sy=%d' % num).encode(), timeOut=10, tryTime=1).read().decode('gb2312')
+		info = Connect(ClassURL, ('sy_sy=%d' % num).encode(), timeOut=10).read().decode('gb2312')
 		if re.search(r'访问人数', info):
 			continue
 		elif re.search(r'物理实验每周只能预约', info):
