@@ -41,7 +41,7 @@ for item in info:
 
 #提交选课信息
 while True:
-	num = int(input('输入课程编号；'))
+	num = int(input('输入课程编号：'))
 	while True:
 		info = Connect(ClassURL, ('sy_sy=%d' % num).encode(), timeOut=10).read().decode('gb2312')
 		if re.search(r'访问人数', info):
