@@ -10,12 +10,14 @@ LoginData = b'stu_id=143401010421&stupwd=1234'
 InfoURL = 'http://59.73.151.11/physlab/s6.php'
 ClassURL = 'http://59.73.151.11/physlab/stuyy_test.php'
 
-def Connect(url, data=b'', timeOut=5, tryTime=5):
+def Connect(url, data=b'', timeOut=10, tryTime=1000):
 	req = urllib.request.Request(url, data)
 	while tryTime > 0 :
 		print('Connecting...')
 		try:
 			res = urllib.request.urlopen(req, timeout=timeOut)
+			if re.search('请稍后访问', res.read().decode('gb2312')):
+				continue
 			return res
 		except:
 			tryTime -= 1
@@ -23,7 +25,7 @@ def Connect(url, data=b'', timeOut=5, tryTime=5):
 	exit()
 
 #获取用户信息
-res = Connect(LoginURL, LoginData)
+Connect(LoginURL, LoginData).read().decode('gb2312')
 info = Connect(InfoURL).read().decode('gb2312');
 if re.search(r'密码错误', info):
 	print('密码错误！')
