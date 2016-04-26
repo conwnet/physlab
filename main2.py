@@ -34,7 +34,7 @@ print('登录成功！')
 
 #获取实验列表，并按实验时间排序
 info = Connect(ClassURL).read().decode('gb2312').replace('&nbsp;', '').replace(' ', '')
-info = re.findall(r'value=(\d)+name=\'sy_sy\'[^>]*>实验名称：([^<]*)<br>教师：([^时]*)[^>]*>第([^<]*)周[^>]*>[^>]*>星期([^<]*)<[^>]*>[^>]*>第([^<]*)节[^>]*>地点：([^<]*)<', info)
+info = re.findall(r'value=(\d+)name=\'sy_sy\'[^>]*>实验名称：([^<]*)<br>教师：([^时]*)[^>]*>第([^<]*)周[^>]*>[^>]*>星期([^<]*)<[^>]*>[^>]*>第([^<]*)节[^>]*>地点：([^<]*)<', info)
 info.sort(key=lambda x: x[3:6])
 for item in info:
 	print('%3s  %2s-%s-%s  %3s  %s  %s' % (item[0], item[3], item[4], item[5], item[2], item[6], item[1]))
