@@ -37,7 +37,7 @@ if re.search(r'密码错误', info) :
 input('登录成功，回车查看可选课程')
 while True:
 	info = Connect(ClassURL).read().decode('gb2312').replace('&nbsp;', '').replace(' ', '')
-	if not re.search(r'访问达到上限', info):
+	if not re.search(r'访问达到上限', info) :
 		break;
 info = re.findall(r'value=(\d+)name=\'sy_sy\'[^>]*>实验名称：([^<]*)<br>教师：([^时]*)[^>]*>第([^<]*)周[^>]*>[^>]*>星期([^<]*)<[^>]*>[^>]*>第([^<]*)节[^>]*>地点：([^<]*)<', info)
 info.sort(key=lambda x: x[3:6])
