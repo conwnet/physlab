@@ -35,7 +35,10 @@ if re.search(r'密码错误', info) :
 
 #获取实验列表，并按实验时间排序
 input('登录成功，回车查看可选课程')
-info = Connect(ClassURL).read().decode('gb2312').replace('&nbsp;', '').replace(' ', '')
+while True:
+	info = Connect(ClassURL).read().decode('gb2312').replace('&nbsp;', '').replace(' ', '')
+	if not re.search(r'访问达到上限', info):
+		break;
 info = re.findall(r'value=(\d+)name=\'sy_sy\'[^>]*>实验名称：([^<]*)<br>教师：([^时]*)[^>]*>第([^<]*)周[^>]*>[^>]*>星期([^<]*)<[^>]*>[^>]*>第([^<]*)节[^>]*>地点：([^<]*)<', info)
 info.sort(key=lambda x: x[3:6])
 for item in info :
@@ -46,7 +49,7 @@ while True :
 	num = int(input('输入课程编号：'))
 	while True :
 		info = Connect(ClassURL, ('sy_sy=%d' % num).encode(), timeOut=10).read().decode('gb2312')
-		if re.search(r'访问人数', info) :
+		if re.search(r'访问达到上限', info) :
 			continue
 		elif re.search(r'物理实验每周只能预约', info) :
 			print('所选周次已经预约实验')
