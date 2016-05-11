@@ -1,16 +1,18 @@
 import urllib.request
 import re
 
+username = input('输入你的学号：')
+password = input('输入你的密码：')
+
 cp = urllib.request.HTTPCookieProcessor()
 opener = urllib.request.build_opener(cp)
 urllib.request.install_opener(opener)
 LoginURL = 'http://59.73.151.11/physlab/s2.php'
-#把LoginData中的信息改成自己的学号和密码...
-LoginData = b'stu_id=143401010421&stupwd=1234'
+LoginData = ('stu_id=' + username + '&stupwd=' + password).encode()
 InfoURL = 'http://59.73.151.11/physlab/s6.php'
 ClassURL = 'http://59.73.151.11/physlab/stuyy_test.php'
 
-def Connect(url, data=b'', timeOut=10, tryTime=50) :
+def Connect(url, data=b'', timeOut=15, tryTime=50) :
 	req = urllib.request.Request(url, data)
 	while True or tryTime > 0 :
 		print('Connecting...')
@@ -29,15 +31,15 @@ while True :
 	if not re.search(r'请稍后访问', info) :
 		break;
 
-if re.search(r'密码错误', info) :
-	print('密码错误！')
+if not re.search(r'物理实验选课', info) : 
+	print('登录失败！密码不对？')
 	exit()
 
 #获取实验列表，并按实验时间排序
 input('登录成功，回车查看可选课程')
 while True:
 	info = Connect(ClassURL).read().decode('gb2312').replace('&nbsp;', '').replace(' ', '')
-	if not re.search(r'访问达到上限', info) :
+	if not re.search(r'访问达到上限', info):
 		break;
 info = re.findall(r'value=(\d+)name=\'sy_sy\'[^>]*>实验名称：([^<]*)<br>教师：([^时]*)[^>]*>第([^<]*)周[^>]*>[^>]*>星期([^<]*)<[^>]*>[^>]*>第([^<]*)节[^>]*>地点：([^<]*)<', info)
 info.sort(key=lambda x: x[3:6])
